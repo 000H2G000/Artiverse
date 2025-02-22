@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "242514954720",
+    "project_id": "artiverse-i9waf2",
+    "storage_bucket": "artiverse-i9waf2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242514954720:android:283795730ecffa9c8f0385",
+        "android_client_info": {
+          "package_name": "com.mycompany.artiverse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd0kmeg36RCyciEwpkdGMV4qTBmPfgil4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
