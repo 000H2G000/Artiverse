@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -65,6 +66,21 @@ class UsersRecord extends FirestoreRecord {
   String get title => _title ?? '';
   bool hasTitle() => _title != null;
 
+  // "favorites" field.
+  List<DocumentReference>? _favorites;
+  List<DocumentReference> get favorites => _favorites ?? const [];
+  bool hasFavorites() => _favorites != null;
+
+  // "wallet" field.
+  DocumentReference? _wallet;
+  DocumentReference? get wallet => _wallet;
+  bool hasWallet() => _wallet != null;
+
+  // "events" field.
+  List<DocumentReference>? _events;
+  List<DocumentReference> get events => _events ?? const [];
+  bool hasEvents() => _events != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -76,6 +92,9 @@ class UsersRecord extends FirestoreRecord {
     _lastActiveTime = snapshotData['last_active_time'] as DateTime?;
     _role = snapshotData['role'] as String?;
     _title = snapshotData['title'] as String?;
+    _favorites = getDataList(snapshotData['favorites']);
+    _wallet = snapshotData['wallet'] as DocumentReference?;
+    _events = getDataList(snapshotData['events']);
   }
 
   static CollectionReference get collection =>
@@ -122,6 +141,7 @@ Map<String, dynamic> createUsersRecordData({
   DateTime? lastActiveTime,
   String? role,
   String? title,
+  DocumentReference? wallet,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -135,6 +155,7 @@ Map<String, dynamic> createUsersRecordData({
       'last_active_time': lastActiveTime,
       'role': role,
       'title': title,
+      'wallet': wallet,
     }.withoutNulls,
   );
 
@@ -146,6 +167,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
@@ -155,7 +177,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.shortDescription == e2?.shortDescription &&
         e1?.lastActiveTime == e2?.lastActiveTime &&
         e1?.role == e2?.role &&
-        e1?.title == e2?.title;
+        e1?.title == e2?.title &&
+        listEquality.equals(e1?.favorites, e2?.favorites) &&
+        e1?.wallet == e2?.wallet &&
+        listEquality.equals(e1?.events, e2?.events);
   }
 
   @override
@@ -169,7 +194,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.shortDescription,
         e?.lastActiveTime,
         e?.role,
-        e?.title
+        e?.title,
+        e?.favorites,
+        e?.wallet,
+        e?.events
       ]);
 
   @override

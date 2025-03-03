@@ -1,5 +1,4 @@
 // Export pages
-export '/pages/home_page/home_page_widget.dart' show HomePageWidget;
 export '/user_access/auth_3_create/auth3_create_widget.dart'
     show Auth3CreateWidget;
 export '/user_access/auth_3_login/auth3_login_widget.dart'
@@ -16,16 +15,6 @@ export '/purchase/purchase_form_option2/purchase_form_option2_widget.dart'
 export '/purchase/purchase_form/purchase_form_widget.dart'
     show PurchaseFormWidget;
 export '/purchase/cart/cart_widget.dart' show CartWidget;
-export '/chat_groupwbubbles/chat_2_details/chat2_details_widget.dart'
-    show Chat2DetailsWidget;
-export '/chat_groupwbubbles/chat_2_main/chat2_main_widget.dart'
-    show Chat2MainWidget;
-export '/chat_groupwbubbles/chat_2_invite_users/chat2_invite_users_widget.dart'
-    show Chat2InviteUsersWidget;
-export '/chat_groupwbubbles/image_details/image_details_widget.dart'
-    show ImageDetailsWidget;
-export '/artwork_details/addarttt/addarttt_widget.dart' show AddartttWidget;
-export '/artwork_details/details/details_widget.dart' show DetailsWidget;
 export '/home_page/home_page1/home_page1_widget.dart' show HomePage1Widget;
 export '/purchase/empty_cart/empty_cart_widget.dart' show EmptyCartWidget;
 export '/home_page/farvorites_page/farvorites_page_widget.dart'
@@ -33,3 +22,33 @@ export '/home_page/farvorites_page/farvorites_page_widget.dart'
 export '/purchase/succesful_payment/succesful_payment_widget.dart'
     show SuccesfulPaymentWidget;
 export '/quotes_gen_page/quote_gen/quote_gen_widget.dart' show QuoteGenWidget;
+export '/event_page/event_main_page/event_main_page_widget.dart'
+    show EventMainPageWidget;
+export '/event_page/create_event/create_event_widget.dart'
+    show CreateEventWidget;
+export '/event_page/event_page/event_page_widget.dart' show EventPageWidget;
+export '/search_and_suggest_art/search_page/search_page_widget.dart'
+    show SearchPageWidget;
+export '/home_page/generate_image/generate_image_widget.dart'
+    show GenerateImageWidget;
+export '/artwork_details/uplad_post/uplad_post_widget.dart'
+    show UpladPostWidget;
+export '/purchase/cart_copy/cart_copy_widget.dart' show CartCopyWidget;
+export '/artwork_details/art_work_details/art_work_details_widget.dart'
+    show ArtWorkDetailsWidget;
+export '/forum_page/forum_page_widget.dart' show ForumPageWidget;
+export '/discussion/discussion_widget.dart' show DiscussionWidget;
+export '/replies/replies_widget.dart' show RepliesWidget;
+export '/purchase/failed_payment/failed_payment_widget.dart'
+    show FailedPaymentWidget;
+export '/gestionartistprofile/read_account/read_account_widget.dart'
+    show ReadAccountWidget;
+export '/event_page/users_events/users_events_widget.dart'
+    show UsersEventsWidget;
+export '/facts_page/facts_page_widget.dart' show FactsPageWidget;
+export '/event_page/update_event_page/update_event_page_widget.dart'
+    show UpdateEventPageWidget;
+export '/gestionartistprofile/create_account/create_account_widget.dart'
+    show CreateAccountWidget;
+export '/gestionartistprofile/update_account/update_account_widget.dart'
+    show UpdateAccountWidget;

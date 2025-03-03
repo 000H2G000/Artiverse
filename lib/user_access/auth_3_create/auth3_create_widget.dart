@@ -747,8 +747,23 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   return;
                                                 }
 
-                                                context.goNamedAuth(
-                                                    QuoteGenWidget.routeName,
+                                                await UsersRecord.collection
+                                                    .doc(user.uid)
+                                                    .update(
+                                                        createUsersRecordData(
+                                                      email: _model
+                                                          .emailAddressTextController
+                                                          .text,
+                                                      createdTime:
+                                                          getCurrentTimestamp,
+                                                      phoneNumber: _model
+                                                          .phoneNumberTextController
+                                                          .text,
+                                                      role: 'normalUser',
+                                                    ));
+
+                                                context.pushNamedAuth(
+                                                    Auth3LoginWidget.routeName,
                                                     context.mounted);
                                               },
                                               text: 'Create Account',

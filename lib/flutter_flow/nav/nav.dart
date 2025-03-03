@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
+
 import '/auth/base_auth_user_provider.dart';
 
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
@@ -77,18 +77,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? QuoteGenWidget() : Auth3LoginWidget(),
+          appStateNotifier.loggedIn ? HomePage1Widget() : Auth3LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? QuoteGenWidget() : Auth3LoginWidget(),
-        ),
-        FFRoute(
-          name: HomePageWidget.routeName,
-          path: HomePageWidget.routePath,
-          builder: (context, params) => HomePageWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? HomePage1Widget()
+              : Auth3LoginWidget(),
         ),
         FFRoute(
           name: Auth3CreateWidget.routeName,
@@ -128,7 +124,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: PurchaseFormOption2Widget.routeName,
           path: PurchaseFormOption2Widget.routePath,
-          builder: (context, params) => PurchaseFormOption2Widget(),
+          asyncParams: {
+            'art': getDoc(['Artwork'], ArtworkRecord.fromSnapshot),
+          },
+          builder: (context, params) => PurchaseFormOption2Widget(
+            art: params.getParam(
+              'art',
+              ParamType.Document,
+            ),
+          ),
         ),
         FFRoute(
           name: PurchaseFormWidget.routeName,
@@ -139,61 +143,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: CartWidget.routeName,
           path: CartWidget.routePath,
           builder: (context, params) => CartWidget(),
-        ),
-        FFRoute(
-          name: Chat2DetailsWidget.routeName,
-          path: Chat2DetailsWidget.routePath,
-          asyncParams: {
-            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
-          },
-          builder: (context, params) => Chat2DetailsWidget(
-            chatRef: params.getParam(
-              'chatRef',
-              ParamType.Document,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: Chat2MainWidget.routeName,
-          path: Chat2MainWidget.routePath,
-          builder: (context, params) => Chat2MainWidget(),
-        ),
-        FFRoute(
-          name: Chat2InviteUsersWidget.routeName,
-          path: Chat2InviteUsersWidget.routePath,
-          asyncParams: {
-            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
-          },
-          builder: (context, params) => Chat2InviteUsersWidget(
-            chatRef: params.getParam(
-              'chatRef',
-              ParamType.Document,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: ImageDetailsWidget.routeName,
-          path: ImageDetailsWidget.routePath,
-          asyncParams: {
-            'chatMessage':
-                getDoc(['chat_messages'], ChatMessagesRecord.fromSnapshot),
-          },
-          builder: (context, params) => ImageDetailsWidget(
-            chatMessage: params.getParam(
-              'chatMessage',
-              ParamType.Document,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: AddartttWidget.routeName,
-          path: AddartttWidget.routePath,
-          builder: (context, params) => AddartttWidget(),
-        ),
-        FFRoute(
-          name: DetailsWidget.routeName,
-          path: DetailsWidget.routePath,
-          builder: (context, params) => DetailsWidget(),
         ),
         FFRoute(
           name: HomePage1Widget.routeName,
@@ -219,9 +168,114 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: QuoteGenWidget.routeName,
           path: QuoteGenWidget.routePath,
           builder: (context, params) => QuoteGenWidget(),
+        ),
+        FFRoute(
+          name: EventMainPageWidget.routeName,
+          path: EventMainPageWidget.routePath,
+          builder: (context, params) => EventMainPageWidget(),
+        ),
+        FFRoute(
+          name: CreateEventWidget.routeName,
+          path: CreateEventWidget.routePath,
+          builder: (context, params) => CreateEventWidget(),
+        ),
+        FFRoute(
+          name: EventPageWidget.routeName,
+          path: EventPageWidget.routePath,
+          asyncParams: {
+            'eventDoc': getDoc(['Event'], EventRecord.fromSnapshot),
+          },
+          builder: (context, params) => EventPageWidget(
+            eventDoc: params.getParam(
+              'eventDoc',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: SearchPageWidget.routeName,
+          path: SearchPageWidget.routePath,
+          builder: (context, params) => SearchPageWidget(),
+        ),
+        FFRoute(
+          name: GenerateImageWidget.routeName,
+          path: GenerateImageWidget.routePath,
+          builder: (context, params) => GenerateImageWidget(),
+        ),
+        FFRoute(
+          name: UpladPostWidget.routeName,
+          path: UpladPostWidget.routePath,
+          builder: (context, params) => UpladPostWidget(),
+        ),
+        FFRoute(
+          name: CartCopyWidget.routeName,
+          path: CartCopyWidget.routePath,
+          builder: (context, params) => CartCopyWidget(),
+        ),
+        FFRoute(
+          name: ArtWorkDetailsWidget.routeName,
+          path: ArtWorkDetailsWidget.routePath,
+          asyncParams: {
+            'art': getDoc(['Artwork'], ArtworkRecord.fromSnapshot),
+          },
+          builder: (context, params) => ArtWorkDetailsWidget(
+            art: params.getParam(
+              'art',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ForumPageWidget.routeName,
+          path: ForumPageWidget.routePath,
+          builder: (context, params) => ForumPageWidget(),
+        ),
+        FFRoute(
+          name: DiscussionWidget.routeName,
+          path: DiscussionWidget.routePath,
+          builder: (context, params) => DiscussionWidget(),
+        ),
+        FFRoute(
+          name: RepliesWidget.routeName,
+          path: RepliesWidget.routePath,
+          builder: (context, params) => RepliesWidget(),
+        ),
+        FFRoute(
+          name: FailedPaymentWidget.routeName,
+          path: FailedPaymentWidget.routePath,
+          builder: (context, params) => FailedPaymentWidget(),
+        ),
+        FFRoute(
+          name: ReadAccountWidget.routeName,
+          path: ReadAccountWidget.routePath,
+          builder: (context, params) => ReadAccountWidget(),
+        ),
+        FFRoute(
+          name: UsersEventsWidget.routeName,
+          path: UsersEventsWidget.routePath,
+          builder: (context, params) => UsersEventsWidget(),
+        ),
+        FFRoute(
+          name: FactsPageWidget.routeName,
+          path: FactsPageWidget.routePath,
+          builder: (context, params) => FactsPageWidget(),
+        ),
+        FFRoute(
+          name: UpdateEventPageWidget.routeName,
+          path: UpdateEventPageWidget.routePath,
+          builder: (context, params) => UpdateEventPageWidget(),
+        ),
+        FFRoute(
+          name: CreateAccountWidget.routeName,
+          path: CreateAccountWidget.routePath,
+          builder: (context, params) => CreateAccountWidget(),
+        ),
+        FFRoute(
+          name: UpdateAccountWidget.routeName,
+          path: UpdateAccountWidget.routePath,
+          builder: (context, params) => UpdateAccountWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -404,15 +458,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
-                    ),
+              ? Container(
+                  color: Colors.transparent,
+                  child: Image.asset(
+                    'assets/images/image_2025-02-07_001418529-removebg-preview.png',
+                    fit: BoxFit.fitWidth,
                   ),
                 )
               : page;

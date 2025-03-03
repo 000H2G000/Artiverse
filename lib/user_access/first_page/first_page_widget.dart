@@ -43,7 +43,7 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.black,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         body: SafeArea(
           top: true,
           child: Column(
@@ -58,7 +58,7 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
                     child: Image.asset(
                       'assets/images/image_2025-02-07_001418529-removebg-preview.png',
                       width: 227.2,
-                      height: 224.0,
+                      height: 216.92,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -66,10 +66,8 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
               ),
               Text(
                 'ARTIVERSE',
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Noto Serif',
-                      color: Colors.white,
-                      fontSize: 38.0,
+                style: FlutterFlowTheme.of(context).displaySmall.override(
+                      fontFamily: 'Urbanist',
                       letterSpacing: 0.0,
                     ),
               ),
@@ -80,7 +78,7 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Noto Serif',
-                        color: Colors.white,
+                        color: FlutterFlowTheme.of(context).primaryText,
                         fontSize: 13.0,
                         letterSpacing: 0.0,
                       ),
@@ -150,7 +148,7 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
                     'forgot your password again ?',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Noto Serif',
-                          color: Colors.white,
+                          color: FlutterFlowTheme.of(context).primaryText,
                           fontSize: 12.0,
                           letterSpacing: 0.0,
                           decoration: TextDecoration.underline,

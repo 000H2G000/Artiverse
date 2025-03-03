@@ -371,7 +371,7 @@ class _Auth3VerifyPhoneWidgetState extends State<Auth3VerifyPhoneWidget>
                                               }
 
                                               context.goNamedAuth(
-                                                  QuoteGenWidget.routeName,
+                                                  HomePage1Widget.routeName,
                                                   context.mounted);
                                             },
                                             text: 'Verify Code',
