@@ -131,7 +131,7 @@ class _ReadAccountWidgetState extends State<ReadAccountWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      120.0, 0.0, 0.0, 0.0),
+                                      200.0, 0.0, 0.0, 0.0),
                                   child: Icon(
                                     Icons.edit,
                                     color: FlutterFlowTheme.of(context)
