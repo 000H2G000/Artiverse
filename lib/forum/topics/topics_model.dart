@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'forum_page_widget.dart' show ForumPageWidget;
+import 'topics_widget.dart' show TopicsWidget;
 import 'package:flutter/material.dart';
 
-class ForumPageModel extends FlutterFlowModel<ForumPageWidget> {
+class TopicsModel extends FlutterFlowModel<TopicsWidget> {
   @override
   void initState(BuildContext context) {}
 

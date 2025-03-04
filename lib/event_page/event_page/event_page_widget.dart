@@ -1,11 +1,14 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_static_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:mapbox_search/mapbox_search.dart' as mapbox;
 import 'package:flutter/material.dart';
@@ -37,6 +40,8 @@ class _EventPageWidgetState extends State<EventPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EventPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -62,7 +67,7 @@ class _EventPageWidgetState extends State<EventPageWidget> {
           child: Stack(
             children: [
               Image.network(
-                '',
+                widget.eventDoc!.image,
                 width: MediaQuery.sizeOf(context).width * 1.0,
                 height: 338.21,
                 fit: BoxFit.cover,
@@ -129,8 +134,7 @@ class _EventPageWidgetState extends State<EventPageWidget> {
                                   children: [
                                     Icon(
                                       Icons.calendar_today,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
+                                      color: Color(0xFF48CAE4),
                                       size: 20.0,
                                     ),
                                     Text(
@@ -146,6 +150,76 @@ class _EventPageWidgetState extends State<EventPageWidget> {
                                           ),
                                     ),
                                   ].divide(SizedBox(width: 8.0)),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    if (currentUserDocument?.roleUser ==
+                                        Role.EventPlanner)
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(1.0, 0.0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  230.0, 0.0, 0.0, 0.0),
+                                          child: AuthUserStreamWidget(
+                                            builder: (context) =>
+                                                FFButtonWidget(
+                                              onPressed: () async {
+                                                context.pushNamed(
+                                                  UpdateEventPageWidget
+                                                      .routeName,
+                                                  queryParameters: {
+                                                    'modifEvent':
+                                                        serializeParam(
+                                                      widget.eventDoc,
+                                                      ParamType.Document,
+                                                    ),
+                                                  }.withoutNulls,
+                                                  extra: <String, dynamic>{
+                                                    'modifEvent':
+                                                        widget.eventDoc,
+                                                  },
+                                                );
+
+                                                FFAppState().image =
+                                                    widget.eventDoc!.image;
+                                                safeSetState(() {});
+                                              },
+                                              text: 'Modify',
+                                              options: FFButtonOptions(
+                                                width: 84.4,
+                                                height: 40.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color: Color(0xFF48CAE4),
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Manrope',
+                                                          color: Colors.white,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                elevation: 0.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                hoverColor: Color(0xFF0077B6),
+                                                hoverBorderSide: BorderSide(
+                                                  color: Color(0xFF0077B6),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ].divide(SizedBox(height: 8.0)),
                             ),
@@ -199,79 +273,110 @@ class _EventPageWidgetState extends State<EventPageWidget> {
                                 ),
                               ),
                             ),
-                            Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0),
+                            FutureBuilder<ApiCallResponse>(
+                              future: MapNinjaApiCall.call(
+                                city: widget.eventDoc?.location,
+                                country: widget.eventDoc?.location2,
                               ),
-                              child: Container(
-                                width: MediaQuery.sizeOf(context).width * 1.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 16.0, 16.0, 16.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Text(
-                                        'Location',
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineSmall
-                                            .override(
-                                              fontFamily: 'Urbanist',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 25.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                      Text(
-                                        valueOrDefault<String>(
-                                          widget.eventDoc?.location,
-                                          'Country/city',
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineSmall
-                                            .override(
-                                              fontFamily: 'Urbanist',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 22.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
                                       ),
-                                      FlutterFlowStaticMap(
-                                        location:
-                                            widget.eventDoc!.exactLocation!,
-                                        apiKey:
-                                            'pk.eyJ1IjoibmVzc2ltbSIsImEiOiJjbTdrN3k4anUwYWVqMmpxc3kyYTZvbGR6In0.cXvnvGKwPMuUeKsqOVF76A',
-                                        style: mapbox.MapBoxStyle.Light,
-                                        width: 300.0,
-                                        height: 300.0,
-                                        fit: BoxFit.cover,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(0.0),
-                                          bottomRight: Radius.circular(0.0),
-                                          topLeft: Radius.circular(0.0),
-                                          topRight: Radius.circular(0.0),
-                                        ),
-                                        zoom: 5,
-                                        tilt: 50,
-                                        rotation: 0,
-                                      ),
-                                    ].divide(SizedBox(height: 16.0)),
+                                    ),
+                                  );
+                                }
+                                final containerMapNinjaApiResponse =
+                                    snapshot.data!;
+
+                                return Material(
+                                  color: Colors.transparent,
+                                  elevation: 2.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
                                   ),
-                                ),
-                              ),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 16.0, 16.0, 16.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Location',
+                                            style: FlutterFlowTheme.of(context)
+                                                .headlineSmall
+                                                .override(
+                                                  fontFamily: 'Urbanist',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 25.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                          Text(
+                                            '${widget.eventDoc?.location}/${widget.eventDoc?.location2}',
+                                            style: FlutterFlowTheme.of(context)
+                                                .headlineSmall
+                                                .override(
+                                                  fontFamily: 'Urbanist',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 22.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                          FlutterFlowStaticMap(
+                                            location: functions.latlngConverter(
+                                                MapNinjaApiCall.lat(
+                                                  containerMapNinjaApiResponse
+                                                      .jsonBody,
+                                                )?.toList(),
+                                                MapNinjaApiCall.lng(
+                                                  containerMapNinjaApiResponse
+                                                      .jsonBody,
+                                                )?.toList()),
+                                            apiKey:
+                                                'pk.eyJ1IjoibmVzc2ltbSIsImEiOiJjbTdrN3k4anUwYWVqMmpxc3kyYTZvbGR6In0.cXvnvGKwPMuUeKsqOVF76A',
+                                            style: mapbox.MapBoxStyle.Light,
+                                            width: 300.0,
+                                            height: 300.0,
+                                            fit: BoxFit.cover,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(0.0),
+                                              bottomRight: Radius.circular(0.0),
+                                              topLeft: Radius.circular(0.0),
+                                              topRight: Radius.circular(0.0),
+                                            ),
+                                            zoom: 5,
+                                            tilt: 50,
+                                            rotation: 0,
+                                          ),
+                                        ].divide(SizedBox(height: 16.0)),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             Material(
                               color: Colors.transparent,
@@ -520,21 +625,6 @@ class _EventPageWidgetState extends State<EventPageWidget> {
                                           },
                                         ),
                                       });
-
-                                      await UserEventRecord.collection
-                                          .doc()
-                                          .set({
-                                        ...createUserEventRecordData(
-                                          userRef: currentUserReference,
-                                        ),
-                                        ...mapToFirestore(
-                                          {
-                                            'EventList': [
-                                              widget.eventDoc?.reference
-                                            ],
-                                          },
-                                        ),
-                                      });
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
@@ -564,7 +654,7 @@ class _EventPageWidgetState extends State<EventPageWidget> {
                                       iconPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
-                                      color: Color(0xFF3823F0),
+                                      color: Color(0xFF48CAE4),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleLarge
                                           .override(
@@ -575,9 +665,31 @@ class _EventPageWidgetState extends State<EventPageWidget> {
                                           ),
                                       elevation: 3.0,
                                       borderRadius: BorderRadius.circular(28.0),
+                                      hoverColor: Color(0xFF023E8A),
                                     ),
                                   );
                                 },
+                              ),
+                            if (currentUserDocument?.roleUser ==
+                                Role.EventPlanner)
+                              AuthUserStreamWidget(
+                                builder: (context) => InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await widget.eventDoc!.reference.delete();
+
+                                    context.pushNamed(
+                                        EventMainPageWidget.routeName);
+                                  },
+                                  child: Icon(
+                                    Icons.delete_sharp,
+                                    color: Color(0xFFFF0005),
+                                    size: 32.0,
+                                  ),
+                                ),
                               ),
                           ].divide(SizedBox(height: 24.0)),
                         ),
@@ -615,7 +727,8 @@ class _EventPageWidgetState extends State<EventPageWidget> {
                                 size: 24.0,
                               ),
                               onPressed: () async {
-                                context.safePop();
+                                context
+                                    .pushNamed(EventMainPageWidget.routeName);
                               },
                             ),
                             Row(

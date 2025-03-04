@@ -39,6 +39,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
 
     _model.textController4 ??= TextEditingController();
     _model.textFieldFocusNode4 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -57,7 +59,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryText,
           automaticallyImplyLeading: false,
@@ -387,11 +389,56 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                     ),
+                    StreamBuilder<List<AccountRecord>>(
+                      stream: queryAccountRecord(
+                        singleRecord: true,
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        List<AccountRecord> iconButtonAccountRecordList =
+                            snapshot.data!;
+                        // Return an empty Container when the item does not exist.
+                        if (snapshot.data!.isEmpty) {
+                          return Container();
+                        }
+                        final iconButtonAccountRecord =
+                            iconButtonAccountRecordList.isNotEmpty
+                                ? iconButtonAccountRecordList.first
+                                : null;
+
+                        return FlutterFlowIconButton(
+                          borderRadius: 8.0,
+                          buttonSize: 40.0,
+                          fillColor: FlutterFlowTheme.of(context).primaryText,
+                          icon: Icon(
+                            Icons.upload_sharp,
+                            color: FlutterFlowTheme.of(context).info,
+                            size: 24.0,
+                          ),
+                          onPressed: () async {
+                            context.pushNamed(UpladPostWidget.routeName);
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                 child: StreamBuilder<List<AccountRecord>>(
                   stream: queryAccountRecord(
                     singleRecord: true,
@@ -439,7 +486,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Account Created Successfully ',
+                              'Account Created Successfully !!',
                               style: TextStyle(
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
@@ -458,14 +505,13 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             16.0, 0.0, 16.0, 0.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .titleSmall
-                            .override(
-                              fontFamily: 'Manrope',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Manrope',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
                         elevation: 0.0,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
@@ -494,20 +540,22 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       );
                     }
-                    List<AccountRecord> seeAcAccountRecordList = snapshot.data!;
+                    List<AccountRecord> buttonAccountRecordList =
+                        snapshot.data!;
                     // Return an empty Container when the item does not exist.
                     if (snapshot.data!.isEmpty) {
                       return Container();
                     }
-                    final seeAcAccountRecord = seeAcAccountRecordList.isNotEmpty
-                        ? seeAcAccountRecordList.first
-                        : null;
+                    final buttonAccountRecord =
+                        buttonAccountRecordList.isNotEmpty
+                            ? buttonAccountRecordList.first
+                            : null;
 
                     return FFButtonWidget(
                       onPressed: () async {
                         context.pushNamed(ReadAccountWidget.routeName);
                       },
-                      text: 'See Account Created !!',
+                      text: 'See Created Accounts !!',
                       options: FFButtonOptions(
                         width: 250.0,
                         height: 40.0,
@@ -515,7 +563,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             16.0, 0.0, 16.0, 0.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).secondaryText,
+                        color: FlutterFlowTheme.of(context).primaryText,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Manrope',

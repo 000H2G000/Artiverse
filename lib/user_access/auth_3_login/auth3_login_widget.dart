@@ -69,6 +69,8 @@ class _Auth3LoginWidgetState extends State<Auth3LoginWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -515,8 +517,7 @@ class _Auth3LoginWidgetState extends State<Auth3LoginWidget>
                                                   safeSetState(() {});
 
                                                   context.pushNamedAuth(
-                                                      EventMainPageWidget
-                                                          .routeName,
+                                                      HomePage1Widget.routeName,
                                                       context.mounted);
                                                 },
                                                 text: 'Login',

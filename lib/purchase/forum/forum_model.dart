@@ -1,8 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'description_widget.dart' show DescriptionWidget;
+import '/index.dart';
+import 'forum_widget.dart' show ForumWidget;
 import 'package:flutter/material.dart';
 
-class DescriptionModel extends FlutterFlowModel<DescriptionWidget> {
+class ForumModel extends FlutterFlowModel<ForumWidget> {
   @override
   void initState(BuildContext context) {}
 

@@ -25,15 +25,8 @@ class UpladPostModel extends FlutterFlowModel<UpladPostWidget> {
   FocusNode? descriptionFocusNode;
   TextEditingController? descriptionTextController;
   String? Function(BuildContext, String?)? descriptionTextControllerValidator;
-  String? _descriptionTextControllerValidator(
-      BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Description is required';
-    }
-
-    return null;
-  }
-
+  // Stores action output result for [Backend Call - API (TextToImage)] action in Icon widget.
+  ApiCallResponse? apiResultya6;
   // State field(s) for SwitchPrice widget.
   bool? switchPriceValue;
   // State field(s) for pirce widget.
@@ -61,13 +54,12 @@ class UpladPostModel extends FlutterFlowModel<UpladPostWidget> {
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // Stores action output result for [Backend Call - API (uploadImage)] action in Image widget.
-  ApiCallResponse? apiResponse;
+  // Stores action output result for [Backend Call - API (uploadImage)] action in Icon widget.
+  ApiCallResponse? apiResultegg;
 
   @override
   void initState(BuildContext context) {
     titleTextControllerValidator = _titleTextControllerValidator;
-    descriptionTextControllerValidator = _descriptionTextControllerValidator;
     pirceTextControllerValidator = _pirceTextControllerValidator;
   }
 

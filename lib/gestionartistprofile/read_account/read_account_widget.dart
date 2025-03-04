@@ -2,6 +2,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'read_account_model.dart';
 export 'read_account_model.dart';
@@ -25,6 +26,8 @@ class _ReadAccountWidgetState extends State<ReadAccountWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ReadAccountModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -121,7 +124,7 @@ class _ReadAccountWidgetState extends State<ReadAccountWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  listViewAccountRecord.nomUtilisateur,
+                                  'nomUtilisateur${listViewAccountRecord.nomUtilisateur}',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -132,29 +135,80 @@ class _ReadAccountWidgetState extends State<ReadAccountWidget> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       200.0, 0.0, 0.0, 0.0),
+                                  child: StreamBuilder<List<AccountRecord>>(
+                                    stream: queryAccountRecord(
+                                      singleRecord: true,
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<AccountRecord>
+                                          iconAccountRecordList =
+                                          snapshot.data!;
+                                      // Return an empty Container when the item does not exist.
+                                      if (snapshot.data!.isEmpty) {
+                                        return Container();
+                                      }
+                                      final iconAccountRecord =
+                                          iconAccountRecordList.isNotEmpty
+                                              ? iconAccountRecordList.first
+                                              : null;
+
+                                      return InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                              UpdateAccountWidget.routeName);
+                                        },
+                                        child: Icon(
+                                          Icons.edit,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 24.0,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await listViewAccountRecord.reference
+                                        .delete();
+                                  },
                                   child: Icon(
-                                    Icons.edit,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                    Icons.delete_sharp,
+                                    color: Color(0xFFC00505),
                                     size: 24.0,
                                   ),
                                 ),
-                                Icon(
-                                  Icons.delete_sharp,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 24.0,
-                                ),
                               ],
                             ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
-                                  valueOrDefault<String>(
-                                    listViewAccountRecord.email?.id,
-                                    'email',
-                                  ),
+                                  'email${listViewAccountRecord.email?.id}',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -168,7 +222,7 @@ class _ReadAccountWidgetState extends State<ReadAccountWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
-                                  listViewAccountRecord.motDePasse,
+                                  'motDePasse${listViewAccountRecord.motDePasse}',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -182,10 +236,7 @@ class _ReadAccountWidgetState extends State<ReadAccountWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
-                                  valueOrDefault<String>(
-                                    listViewAccountRecord.photoUrl?.id,
-                                    '...',
-                                  ),
+                                  'Photo${listViewAccountRecord.photoUrl?.id}',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(

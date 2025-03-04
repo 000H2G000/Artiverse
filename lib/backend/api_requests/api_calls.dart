@@ -9,7 +9,11 @@ export 'api_manager.dart' show ApiCallResponse;
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
 class QuoteAPICall {
-  static Future<ApiCallResponse> call() async {
+  static Future<ApiCallResponse> call({
+    List<String>? apiResult0pzList,
+  }) async {
+    final apiResult0pz = _serializeList(apiResult0pzList);
+
     return ApiManager.instance.makeApiCall(
       callName: 'QuoteAPI',
       apiUrl: 'https://api.api-ninjas.com/v1/quotes',
@@ -142,7 +146,9 @@ class RandomFactsCall {
       callName: 'RandomFacts',
       apiUrl: 'https://api.api-ninjas.com/v1/facts',
       callType: ApiCallType.GET,
-      headers: {},
+      headers: {
+        'X-Api-Key': 'yCDCdm3P9KXalR9x8mMvoA==quO7YGlGAu1SGdoM',
+      },
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
@@ -155,7 +161,9 @@ class RandomFactsCall {
 }
 
 class TextToImageCall {
-  static Future<ApiCallResponse> call() async {
+  static Future<ApiCallResponse> call({
+    String? text = '',
+  }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'TextToImage',
       apiUrl: 'https://api.api-ninjas.com/v1/imagetotext',
@@ -165,6 +173,98 @@ class TextToImageCall {
       },
       params: {},
       bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ImdbCall {
+  static Future<ApiCallResponse> call({
+    List<String>? imdbResultList,
+  }) async {
+    final imdbResult = _serializeList(imdbResultList);
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Imdb',
+      apiUrl: 'https://imdb-top-100-movies.p.rapidapi.com/',
+      callType: ApiCallType.GET,
+      headers: {
+        'x-rapidapi-host': 'imdb-top-100-movies.p.rapidapi.com',
+        'x-rapidapi-key': '95c52674e9msh60d14c805e7a063p13be69jsn76e98331e86c',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DadJokeCall {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'DadJoke',
+      apiUrl: 'https://api.api-ninjas.com/v1/dadjokes',
+      callType: ApiCallType.GET,
+      headers: {
+        'X-Api-Key': 'yCDCdm3P9KXalR9x8mMvoA==quO7YGlGAu1SGdoM',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class NewsCall {
+  static Future<ApiCallResponse> call({
+    List<String>? newsList,
+  }) async {
+    final news = _serializeList(newsList);
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'news',
+      apiUrl:
+          'https://extract-news.p.rapidapi.com/v0/article?url=https%3A%2F%2Fwww.theverge.com%2F2020%2F4%2F17%2F21224728%2Fbill-gates-coronavirus-lies-5g-covid-19',
+      callType: ApiCallType.GET,
+      headers: {
+        'x-rapidapi-host': 'extract-news.p.rapidapi.com',
+        'x-rapidapi-key': '95c52674e9msh60d14c805e7a063p13be69jsn76e98331e86c',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ChatbotCall {
+  static Future<ApiCallResponse> call({
+    String? kjfhf = 'hghghg',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'chatbot',
+      apiUrl:
+          'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyD_yOiitx3QF520zmTUsT9NA7X7pc2auWE',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

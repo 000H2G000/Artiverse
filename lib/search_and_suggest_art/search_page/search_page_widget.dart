@@ -38,6 +38,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     });
 
     _model.textController ??= TextEditingController();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -18,7 +18,12 @@ import 'update_event_page_model.dart';
 export 'update_event_page_model.dart';
 
 class UpdateEventPageWidget extends StatefulWidget {
-  const UpdateEventPageWidget({super.key});
+  const UpdateEventPageWidget({
+    super.key,
+    required this.modifEvent,
+  });
+
+  final EventRecord? modifEvent;
 
   static String routeName = 'UpdateEventPage';
   static String routePath = '/updateEventPage';
@@ -37,23 +42,31 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
     super.initState();
     _model = createModel(context, () => UpdateEventPageModel());
 
-    _model.textController1 ??= TextEditingController();
+    _model.textController1 ??=
+        TextEditingController(text: widget.modifEvent?.name);
     _model.textFieldFocusNode1 ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
+    _model.textController2 ??=
+        TextEditingController(text: widget.modifEvent?.description);
     _model.textFieldFocusNode2 ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController(text: 'Tunisia');
+    _model.textController3 ??=
+        TextEditingController(text: widget.modifEvent?.location);
     _model.textFieldFocusNode3 ??= FocusNode();
 
-    _model.textController4 ??= TextEditingController(text: 'Tunis');
+    _model.textController4 ??=
+        TextEditingController(text: widget.modifEvent?.location2);
     _model.textFieldFocusNode4 ??= FocusNode();
 
-    _model.priceTextController ??= TextEditingController();
+    _model.priceTextController ??=
+        TextEditingController(text: widget.modifEvent?.price.toString());
     _model.priceFocusNode ??= FocusNode();
 
-    _model.maxGuestsTextController ??= TextEditingController();
+    _model.maxGuestsTextController ??= TextEditingController(
+        text: widget.modifEvent?.maxGuestsNumber.toString());
     _model.maxGuestsFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -95,7 +108,7 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
           title: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 30.0),
             child: Text(
-              'Create New Event',
+              'Update your Event',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Urbanist',
                     color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -361,7 +374,11 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                                       controller: _model
                                                               .dropDownValueController ??=
                                                           FormFieldController<
-                                                              String>(null),
+                                                              String>(
+                                                        _model.dropDownValue ??=
+                                                            widget.modifEvent
+                                                                ?.category,
+                                                      ),
                                                       options: EventCategory
                                                           .values
                                                           .map((e) => e.name)
@@ -492,7 +509,7 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                               autofocus: false,
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                labelText: 'Tunisia',
+                                                labelText: 'Country',
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -585,7 +602,7 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                               autofocus: false,
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                labelText: 'Tunis',
+                                                labelText: 'City',
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -874,10 +891,14 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                                           final _datePicked1Date =
                                                               await showDatePicker(
                                                             context: context,
-                                                            initialDate:
-                                                                getCurrentTimestamp,
-                                                            firstDate:
-                                                                getCurrentTimestamp,
+                                                            initialDate: (widget
+                                                                    .modifEvent
+                                                                    ?.startDate ??
+                                                                DateTime.now()),
+                                                            firstDate: (widget
+                                                                    .modifEvent
+                                                                    ?.startDate ??
+                                                                DateTime.now()),
                                                             lastDate:
                                                                 DateTime(2050),
                                                             builder: (context,
@@ -940,8 +961,11 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                                                 await showTimePicker(
                                                               context: context,
                                                               initialTime: TimeOfDay
-                                                                  .fromDateTime(
-                                                                      getCurrentTimestamp),
+                                                                  .fromDateTime((widget
+                                                                          .modifEvent
+                                                                          ?.startDate ??
+                                                                      DateTime
+                                                                          .now())),
                                                               builder: (context,
                                                                   child) {
                                                                 return wrapInMaterialTimePickerTheme(
@@ -1019,7 +1043,9 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                                               null) {
                                                             safeSetState(() {
                                                               _model.datePicked1 =
-                                                                  getCurrentTimestamp;
+                                                                  widget
+                                                                      .modifEvent
+                                                                      ?.startDate;
                                                             });
                                                           }
                                                         },
@@ -1143,10 +1169,14 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                                           final _datePicked2Date =
                                                               await showDatePicker(
                                                             context: context,
-                                                            initialDate:
-                                                                getCurrentTimestamp,
-                                                            firstDate:
-                                                                getCurrentTimestamp,
+                                                            initialDate: (widget
+                                                                    .modifEvent
+                                                                    ?.endDate ??
+                                                                DateTime.now()),
+                                                            firstDate: (widget
+                                                                    .modifEvent
+                                                                    ?.endDate ??
+                                                                DateTime.now()),
                                                             lastDate:
                                                                 DateTime(2050),
                                                             builder: (context,
@@ -1209,8 +1239,11 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                                                 await showTimePicker(
                                                               context: context,
                                                               initialTime: TimeOfDay
-                                                                  .fromDateTime(
-                                                                      getCurrentTimestamp),
+                                                                  .fromDateTime((widget
+                                                                          .modifEvent
+                                                                          ?.endDate ??
+                                                                      DateTime
+                                                                          .now())),
                                                               builder: (context,
                                                                   child) {
                                                                 return wrapInMaterialTimePickerTheme(
@@ -1288,7 +1321,9 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                                               null) {
                                                             safeSetState(() {
                                                               _model.datePicked2 =
-                                                                  getCurrentTimestamp;
+                                                                  widget
+                                                                      .modifEvent
+                                                                      ?.endDate;
                                                             });
                                                           }
                                                         },
@@ -1655,7 +1690,7 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                                 image: DecorationImage(
                                                   fit: BoxFit.cover,
                                                   image: Image.network(
-                                                    FFAppState().image,
+                                                    widget.modifEvent!.image,
                                                   ).image,
                                                 ),
                                               ),
@@ -1889,8 +1924,27 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                                 : null;
 
                         return FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            await widget.modifEvent!.reference
+                                .update(createEventRecordData(
+                              name: _model.textController1.text,
+                              description: _model.textController2.text,
+                              location:
+                                  '${_model.textController3.text}/${_model.textController4.text}',
+                              image: FFAppState().image,
+                              startDate: _model.datePicked1,
+                              endDate: _model.datePicked2,
+                              maxGuestsNumber: int.tryParse(
+                                  _model.maxGuestsTextController.text),
+                              category: _model.dropDownValue,
+                              price: double.tryParse(
+                                  _model.priceTextController.text),
+                              participants: 1,
+                              exactLocation: FFAppState().Latlng,
+                            ));
+                            FFAppState().image = '';
+                            FFAppState().update(() {});
+                            context.safePop();
                           },
                           text: 'update Event',
                           options: FFButtonOptions(
@@ -1919,8 +1973,26 @@ class _UpdateEventPageWidgetState extends State<UpdateEventPageWidget> {
                 Align(
                   alignment: AlignmentDirectional(0.0, 0.0),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      await widget.modifEvent!.reference
+                          .update(createEventRecordData(
+                        name: _model.textController1.text,
+                        description: _model.textController2.text,
+                        location: _model.textController3.text,
+                        image: FFAppState().image,
+                        startDate: _model.datePicked1,
+                        endDate: _model.datePicked2,
+                        maxGuestsNumber:
+                            int.tryParse(_model.maxGuestsTextController.text),
+                        category: _model.dropDownValue,
+                        price: double.tryParse(_model.priceTextController.text),
+                        participants: 1,
+                        exactLocation: FFAppState().Latlng,
+                        location2: _model.textController4.text,
+                      ));
+                      FFAppState().image = '';
+                      safeSetState(() {});
+                      context.safePop();
                     },
                     text: 'Button',
                     options: FFButtonOptions(

@@ -50,6 +50,8 @@ class _CartWidgetState extends State<CartWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CartModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

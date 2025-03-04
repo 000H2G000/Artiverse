@@ -29,6 +29,8 @@ class _DiscussionWidgetState extends State<DiscussionWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -59,7 +61,7 @@ class _DiscussionWidgetState extends State<DiscussionWidget> {
               size: 24.0,
             ),
             onPressed: () async {
-              context.pushNamed(ForumPageWidget.routeName);
+              context.pushNamed(TopicsWidget.routeName);
             },
           ),
           title: Text(

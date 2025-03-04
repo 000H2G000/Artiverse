@@ -95,6 +95,8 @@ class _PurchaseFormWidgetState extends State<PurchaseFormWidget> {
 
     _model.textController9 ??= TextEditingController();
     _model.textFieldFocusNode9 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

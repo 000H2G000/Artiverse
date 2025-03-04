@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'home_page1_model.dart';
 export 'home_page1_model.dart';
 
@@ -37,6 +38,8 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -64,21 +67,20 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 60.0,
-            icon: Icon(
-              Icons.arrow_back_rounded,
+            icon: FaIcon(
+              FontAwesomeIcons.safari,
               color: Colors.white,
               size: 30.0,
             ),
-            onPressed: () async {
-              context.pop();
+            onPressed: () {
+              print('IconButton pressed ...');
             },
           ),
           title: Text(
             'ArtiVerse',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
+            style: FlutterFlowTheme.of(context).displaySmall.override(
                   fontFamily: 'Urbanist',
-                  color: Colors.white,
-                  fontSize: 22.0,
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
                   letterSpacing: 0.0,
                 ),
           ),
@@ -130,11 +132,30 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Icon(
-                                    Icons.search_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 24.0,
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed(
+                                        SearchPageWidget.routeName,
+                                        extra: <String, dynamic>{
+                                          kTransitionInfoKey: TransitionInfo(
+                                            hasTransition: true,
+                                            transitionType:
+                                                PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                          ),
+                                        },
+                                      );
+                                    },
+                                    child: Icon(
+                                      Icons.search_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
                                   ),
                                   Expanded(
                                     child: TextFormField(
@@ -181,13 +202,14 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                               fillColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,
                               icon: Icon(
-                                Icons.filter_list,
+                                Icons.event,
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                                 size: 24.0,
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
+                              onPressed: () async {
+                                context
+                                    .pushNamed(EventMainPageWidget.routeName);
                               },
                             ),
                             FlutterFlowIconButton(
@@ -197,16 +219,31 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                               fillColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,
                               icon: Icon(
-                                Icons.mic,
+                                Icons.voice_chat,
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                                 size: 24.0,
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
+                              onPressed: () async {
+                                context.pushNamed(ChatHistoryWidget.routeName);
                               },
                             ),
                           ].divide(SizedBox(width: 8.0)),
+                        ),
+                        FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 23.0,
+                          buttonSize: 46.0,
+                          fillColor:
+                              FlutterFlowTheme.of(context).primaryBackground,
+                          icon: Icon(
+                            Icons.newspaper_sharp,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            size: 24.0,
+                          ),
+                          onPressed: () async {
+                            context.pushNamed(NewsWidget.routeName);
+                          },
                         ),
                       ].divide(SizedBox(width: 12.0)),
                     ),
@@ -262,12 +299,15 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                                     ChipData('Paintings'),
                                     ChipData('Digital Art'),
                                     ChipData('Photography'),
-                                    ChipData('Sculptures'),
+                                    ChipData('Movies', Icons.local_movies),
                                     ChipData('Ceramics'),
                                     ChipData('Mixed Media')
                                   ],
-                                  onChanged: (val) => safeSetState(() => _model
-                                      .choiceChipsValue = val?.firstOrNull),
+                                  onChanged: (val) async {
+                                    safeSetState(() => _model.choiceChipsValue =
+                                        val?.firstOrNull);
+                                    context.pushNamed(ImdbWidget.routeName);
+                                  },
                                   selectedChipStyle: ChipStyle(
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).primary,
@@ -432,6 +472,7 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
+                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -447,6 +488,7 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,
+                                                          fontSize: 10.0,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -461,6 +503,7 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primary,
+                                                          fontSize: 12.0,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -581,8 +624,8 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                                   color: FlutterFlowTheme.of(context).info,
                                   size: 32.0,
                                 ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
+                                onPressed: () async {
+                                  context.pushNamed(UpladPostWidget.routeName);
                                 },
                               ),
                             ),
@@ -617,8 +660,8 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               size: 24.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed: () async {
+                              context.pushNamed(FarvoritesPageWidget.routeName);
                             },
                           ),
                           Text(
@@ -647,8 +690,8 @@ class _HomePage1WidgetState extends State<HomePage1Widget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               size: 24.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed: () async {
+                              context.pushNamed(CreateAccountWidget.routeName);
                             },
                           ),
                           Text(

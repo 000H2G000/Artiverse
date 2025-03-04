@@ -50,8 +50,14 @@ class _ArtWorkDetailsWidgetState extends State<ArtWorkDetailsWidget> {
     super.initState();
     _model = createModel(context, () => ArtWorkDetailsModel());
 
-    _model.textController ??= TextEditingController();
+    _model.textController ??= TextEditingController(
+        text: valueOrDefault<String>(
+      widget.art?.hasTitle().toString(),
+      'title',
+    ));
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -106,14 +112,44 @@ class _ArtWorkDetailsWidgetState extends State<ArtWorkDetailsWidget> {
                             ),
                             child: Stack(
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                    'https://picsum.photos/seed/424/600',
-                                    width: 406.4,
-                                    height: 397.39,
-                                    fit: BoxFit.cover,
+                                StreamBuilder<List<ArtworkRecord>>(
+                                  stream: queryArtworkRecord(
+                                    singleRecord: true,
                                   ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Image.asset(
+                                        key: ValueKey(widget.art!
+                                            .hasImageURL()
+                                            .toString()),
+                                        '',
+                                      );
+                                    }
+                                    List<ArtworkRecord> imageArtworkRecordList =
+                                        snapshot.data!;
+                                    // Return an empty Container when the item does not exist.
+                                    if (snapshot.data!.isEmpty) {
+                                      return Container();
+                                    }
+                                    final imageArtworkRecord =
+                                        imageArtworkRecordList.isNotEmpty
+                                            ? imageArtworkRecordList.first
+                                            : null;
+
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.network(
+                                        key: ValueKey(widget.art!
+                                            .hasImageURL()
+                                            .toString()),
+                                        widget.art!.imageURL,
+                                        width: 406.4,
+                                        height: 397.39,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -150,7 +186,7 @@ class _ArtWorkDetailsWidgetState extends State<ArtWorkDetailsWidget> {
                                     children: [
                                       Text(
                                         valueOrDefault<String>(
-                                          widget.art?.title,
+                                          widget.art?.hasTitle().toString(),
                                           'none',
                                         ),
                                         style: FlutterFlowTheme.of(context)
@@ -190,8 +226,10 @@ class _ArtWorkDetailsWidgetState extends State<ArtWorkDetailsWidget> {
                                               key: ValueKey(
                                                   currentUserDisplayName),
                                               valueOrDefault<String>(
-                                                widget.art?.createdBy?.id,
-                                                'none',
+                                                widget.art
+                                                    ?.hasCreatedBy()
+                                                    .toString(),
+                                                'user',
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -535,35 +573,45 @@ class _ArtWorkDetailsWidgetState extends State<ArtWorkDetailsWidget> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text(
-                                                          'Emily Chen',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Manrope',
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
+                                                        AuthUserStreamWidget(
+                                                          builder: (context) =>
+                                                              Text(
+                                                            currentUserDisplayName,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Manrope',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
                                                         ),
-                                                        Text(
-                                                          '2 days ago',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Manrope',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
+                                                        AuthUserStreamWidget(
+                                                          builder: (context) =>
+                                                              Text(
+                                                            key: ValueKey(
+                                                                currentUserDocument!
+                                                                    .createdTime!
+                                                                    .toString()),
+                                                            '2 days ago',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Manrope',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -636,20 +684,23 @@ class _ArtWorkDetailsWidgetState extends State<ArtWorkDetailsWidget> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text(
-                                                          'Michael Roberts',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Manrope',
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
+                                                        AuthUserStreamWidget(
+                                                          builder: (context) =>
+                                                              Text(
+                                                            currentUserDisplayName,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Manrope',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
                                                         ),
                                                         Text(
                                                           '1 week ago',
@@ -753,12 +804,12 @@ class _ArtWorkDetailsWidgetState extends State<ArtWorkDetailsWidget> {
                                 buttonSize: 40.0,
                                 fillColor: Color(0x33FFFFFF),
                                 icon: Icon(
-                                  Icons.share,
+                                  Icons.fact_check,
                                   color: Colors.white,
                                   size: 24.0,
                                 ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
+                                onPressed: () async {
+                                  context.pushNamed(FactsPageWidget.routeName);
                                 },
                               ),
                             ].divide(SizedBox(width: 16.0)),

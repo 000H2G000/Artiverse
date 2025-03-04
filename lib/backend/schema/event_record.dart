@@ -76,6 +76,11 @@ class EventRecord extends FirestoreRecord {
   LatLng? get exactLocation => _exactLocation;
   bool hasExactLocation() => _exactLocation != null;
 
+  // "location2" field.
+  String? _location2;
+  String get location2 => _location2 ?? '';
+  bool hasLocation2() => _location2 != null;
+
   void _initializeFields() {
     _name = snapshotData['Name'] as String?;
     _description = snapshotData['Description'] as String?;
@@ -89,6 +94,7 @@ class EventRecord extends FirestoreRecord {
     _participants = castToType<int>(snapshotData['participants']);
     _userParticipants = getDataList(snapshotData['userParticipants']);
     _exactLocation = snapshotData['exactLocation'] as LatLng?;
+    _location2 = snapshotData['location2'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -136,6 +142,7 @@ Map<String, dynamic> createEventRecordData({
   double? price,
   int? participants,
   LatLng? exactLocation,
+  String? location2,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -150,6 +157,7 @@ Map<String, dynamic> createEventRecordData({
       'Price': price,
       'participants': participants,
       'exactLocation': exactLocation,
+      'location2': location2,
     }.withoutNulls,
   );
 
@@ -173,7 +181,8 @@ class EventRecordDocumentEquality implements Equality<EventRecord> {
         e1?.price == e2?.price &&
         e1?.participants == e2?.participants &&
         listEquality.equals(e1?.userParticipants, e2?.userParticipants) &&
-        e1?.exactLocation == e2?.exactLocation;
+        e1?.exactLocation == e2?.exactLocation &&
+        e1?.location2 == e2?.location2;
   }
 
   @override
@@ -189,7 +198,8 @@ class EventRecordDocumentEquality implements Equality<EventRecord> {
         e?.price,
         e?.participants,
         e?.userParticipants,
-        e?.exactLocation
+        e?.exactLocation,
+        e?.location2
       ]);
 
   @override

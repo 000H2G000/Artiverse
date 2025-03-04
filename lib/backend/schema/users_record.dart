@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
+import '/backend/schema/enums/enums.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -81,6 +82,11 @@ class UsersRecord extends FirestoreRecord {
   List<DocumentReference> get events => _events ?? const [];
   bool hasEvents() => _events != null;
 
+  // "roleUser" field.
+  Role? _roleUser;
+  Role? get roleUser => _roleUser;
+  bool hasRoleUser() => _roleUser != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -95,6 +101,9 @@ class UsersRecord extends FirestoreRecord {
     _favorites = getDataList(snapshotData['favorites']);
     _wallet = snapshotData['wallet'] as DocumentReference?;
     _events = getDataList(snapshotData['events']);
+    _roleUser = snapshotData['roleUser'] is Role
+        ? snapshotData['roleUser']
+        : deserializeEnum<Role>(snapshotData['roleUser']);
   }
 
   static CollectionReference get collection =>
@@ -142,6 +151,7 @@ Map<String, dynamic> createUsersRecordData({
   String? role,
   String? title,
   DocumentReference? wallet,
+  Role? roleUser,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -156,6 +166,7 @@ Map<String, dynamic> createUsersRecordData({
       'role': role,
       'title': title,
       'wallet': wallet,
+      'roleUser': roleUser,
     }.withoutNulls,
   );
 
@@ -180,7 +191,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.title == e2?.title &&
         listEquality.equals(e1?.favorites, e2?.favorites) &&
         e1?.wallet == e2?.wallet &&
-        listEquality.equals(e1?.events, e2?.events);
+        listEquality.equals(e1?.events, e2?.events) &&
+        e1?.roleUser == e2?.roleUser;
   }
 
   @override
@@ -197,7 +209,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.title,
         e?.favorites,
         e?.wallet,
-        e?.events
+        e?.events,
+        e?.roleUser
       ]);
 
   @override

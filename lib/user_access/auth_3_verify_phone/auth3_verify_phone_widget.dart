@@ -70,6 +70,8 @@ class _Auth3VerifyPhoneWidgetState extends State<Auth3VerifyPhoneWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -371,7 +373,7 @@ class _Auth3VerifyPhoneWidgetState extends State<Auth3VerifyPhoneWidget>
                                               }
 
                                               context.goNamedAuth(
-                                                  HomePage1Widget.routeName,
+                                                  FirstPageWidget.routeName,
                                                   context.mounted);
                                             },
                                             text: 'Verify Code',

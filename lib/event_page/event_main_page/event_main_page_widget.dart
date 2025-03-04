@@ -41,6 +41,8 @@ class _EventMainPageWidgetState extends State<EventMainPageWidget> {
     });
 
     _model.textController ??= TextEditingController();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -60,7 +62,7 @@ class _EventMainPageWidgetState extends State<EventMainPageWidget> {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Color(0xFF183DE4),
+            backgroundColor: Color(0xFFADE8F4),
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -83,7 +85,7 @@ class _EventMainPageWidgetState extends State<EventMainPageWidget> {
           },
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: Color(0xFF183DE4),
+            backgroundColor: Color(0xFFADE8F4),
             body: SafeArea(
               top: true,
               child: SingleChildScrollView(
@@ -94,13 +96,10 @@ class _EventMainPageWidgetState extends State<EventMainPageWidget> {
                   children: [
                     Container(
                       width: MediaQuery.sizeOf(context).width * 1.017,
-                      height: 205.31,
+                      height: 205.3,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [
-                            FlutterFlowTheme.of(context).error,
-                            Color(0xFF4B39EF)
-                          ],
+                          colors: [Color(0xFF0077B6), Color(0xFF00B4D8)],
                           stops: [0.0, 1.0],
                           begin: AlignmentDirectional(0.0, -1.0),
                           end: AlignmentDirectional(0, 1.0),
@@ -114,6 +113,27 @@ class _EventMainPageWidgetState extends State<EventMainPageWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context
+                                        .pushNamed(HomePage1Widget.routeName);
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    size: 24.0,
+                                  ),
+                                ),
+                              ],
+                            ),
                             Align(
                               alignment: AlignmentDirectional(-1.0, -1.0),
                               child: Text(
@@ -342,61 +362,6 @@ class _EventMainPageWidgetState extends State<EventMainPageWidget> {
                               ),
                             ),
                           ),
-                          Wrap(
-                            spacing: 8.0,
-                            runSpacing: 8.0,
-                            alignment: WrapAlignment.start,
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            direction: Axis.horizontal,
-                            runAlignment: WrapAlignment.start,
-                            verticalDirection: VerticalDirection.down,
-                            clipBehavior: Clip.none,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(1.0, -1.0),
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      context.pushNamed(
-                                          UsersEventsWidget.routeName);
-                                    },
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                        minWidth: 50.0,
-                                        minHeight: 50.0,
-                                        maxWidth: 100.0,
-                                        maxHeight: 100.0,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF1B8BD0),
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 16.0, 8.0, 16.0),
-                                        child: Text(
-                                          'Your Events',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Manrope',
-                                                color: Colors.white,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
                         ].divide(SizedBox(height: 24.0)),
                       ),
                     ),
@@ -441,11 +406,7 @@ class _EventMainPageWidgetState extends State<EventMainPageWidget> {
                                 ),
                                 if (!FFAppState().searchActive)
                                   StreamBuilder<List<EventRecord>>(
-                                    stream: queryEventRecord(
-                                      queryBuilder: (eventRecord) =>
-                                          eventRecord.orderBy('StartDate',
-                                              descending: true),
-                                    ),
+                                    stream: queryEventRecord(),
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
                                       if (!snapshot.hasData) {
@@ -513,9 +474,7 @@ class _EventMainPageWidgetState extends State<EventMainPageWidget> {
                                                             .width *
                                                         1.0,
                                                 decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
+                                                  color: Color(0xFFCAF0F8),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),

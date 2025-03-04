@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -76,6 +77,8 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -760,6 +763,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                           .phoneNumberTextController
                                                           .text,
                                                       role: 'normalUser',
+                                                      roleUser: Role.normal,
                                                     ));
 
                                                 context.pushNamedAuth(

@@ -55,6 +55,8 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
 
     _model.maxGuestsTextController ??= TextEditingController();
     _model.maxGuestsFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -75,9 +77,9 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: Color(0xFF0077B6),
         appBar: AppBar(
-          backgroundColor: Color(0xFF3F2DEE),
+          backgroundColor: Color(0xFF023E8A),
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -123,7 +125,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: Color(0xFF0077B6),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(0.0),
                         bottomRight: Radius.circular(0.0),
@@ -371,7 +373,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                                           safeSetState(() =>
                                                               _model.dropDownValue =
                                                                   val),
-                                                      width: 248.94,
+                                                      width: 248.9,
                                                       height: 40.0,
                                                       textStyle:
                                                           FlutterFlowTheme.of(
@@ -1044,7 +1046,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                                                       0.0,
                                                                       0.0),
                                                           color:
-                                                              Color(0xFF4632F6),
+                                                              Color(0xFF023E8A),
                                                           textStyle:
                                                               FlutterFlowTheme.of(
                                                                       context)
@@ -1312,7 +1314,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                                                       0.0,
                                                                       0.0),
                                                           color:
-                                                              Color(0xFF3B25F7),
+                                                              Color(0xFF023E8A),
                                                           textStyle:
                                                               FlutterFlowTheme.of(
                                                                       context)
@@ -1927,9 +1929,9 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                       _model.priceTextController.text),
                                   image: FFAppState().image,
                                   participants: 1,
-                                  location:
-                                      '${_model.textController3.text}/${_model.textController4.text}',
+                                  location: _model.textController3.text,
                                   exactLocation: FFAppState().Latlng,
+                                  location2: _model.textController4.text,
                                 ),
                                 ...mapToFirestore(
                                   {
@@ -1981,7 +1983,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                             padding: EdgeInsets.all(8.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: Color(0xFF3C27F6),
+                            color: Color(0xFF023E8A),
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleLarge
                                 .override(
@@ -2039,9 +2041,9 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                 _model.priceTextController.text),
                             image: FFAppState().image,
                             participants: 1,
-                            location:
-                                '${_model.textController3.text}/${_model.textController4.text}',
+                            location: _model.textController3.text,
                             exactLocation: FFAppState().Latlng,
+                            location2: _model.textController4.text,
                           ),
                           ...mapToFirestore(
                             {
@@ -2083,7 +2085,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                           EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: Color(0xFF3D2BD8),
+                      color: Color(0xFF023E8A),
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Manrope',

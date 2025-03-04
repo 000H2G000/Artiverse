@@ -25,6 +25,8 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FirstPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

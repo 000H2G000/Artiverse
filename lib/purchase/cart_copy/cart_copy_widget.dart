@@ -51,6 +51,8 @@ class _CartCopyWidgetState extends State<CartCopyWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CartCopyModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

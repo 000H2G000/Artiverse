@@ -82,6 +82,8 @@ class _PurchaseFormOption2WidgetState extends State<PurchaseFormOption2Widget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -178,16 +180,10 @@ class _PurchaseFormOption2WidgetState extends State<PurchaseFormOption2Widget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Ethereal Horizons',
-                                    style: FlutterFlowTheme.of(context)
-                                        .headlineSmall
-                                        .override(
-                                          fontFamily: 'Urbanist',
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                  Text(
-                                    'Sarah Chen',
+                                    valueOrDefault<String>(
+                                      widget.art?.title,
+                                      'none',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
@@ -675,8 +671,15 @@ class _PurchaseFormOption2WidgetState extends State<PurchaseFormOption2Widget> {
                                                                 ),
                                                           ),
                                                           Text(
-                                                            containerWalletRecord
-                                                                .amount
+                                                            (valueOrDefault<
+                                                                        double>(
+                                                                      widget
+                                                                          .art
+                                                                          ?.price,
+                                                                      0.0,
+                                                                    ) -
+                                                                    widget.art!
+                                                                        .discount)
                                                                 .toString(),
                                                             style: FlutterFlowTheme
                                                                     .of(context)
@@ -1205,6 +1208,18 @@ class _PurchaseFormOption2WidgetState extends State<PurchaseFormOption2Widget> {
                             onTap: () async {
                               if (containerWalletRecord!.amount >
                                   widget.art!.price) {
+                                await currentUserDocument!.wallet!.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'amount': FieldValue.increment(
+                                          -(valueOrDefault<double>(
+                                        widget.art?.price,
+                                        0.0,
+                                      ))),
+                                    },
+                                  ),
+                                });
+
                                 context.pushNamed(
                                     SuccesfulPaymentWidget.routeName);
                               } else {

@@ -77,14 +77,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? HomePage1Widget() : CreateAccountWidget(),
+          appStateNotifier.loggedIn ? FirstPageWidget() : HomePage1Widget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? HomePage1Widget()
-              : CreateAccountWidget(),
+          builder: (context, _) =>
+              appStateNotifier.loggedIn ? FirstPageWidget() : HomePage1Widget(),
         ),
         FFRoute(
           name: Auth3CreateWidget.routeName,
@@ -226,9 +225,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: ForumPageWidget.routeName,
-          path: ForumPageWidget.routePath,
-          builder: (context, params) => ForumPageWidget(),
+          name: TopicsWidget.routeName,
+          path: TopicsWidget.routePath,
+          builder: (context, params) => TopicsWidget(),
         ),
         FFRoute(
           name: DiscussionWidget.routeName,
@@ -263,7 +262,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: UpdateEventPageWidget.routeName,
           path: UpdateEventPageWidget.routePath,
-          builder: (context, params) => UpdateEventPageWidget(),
+          asyncParams: {
+            'modifEvent': getDoc(['Event'], EventRecord.fromSnapshot),
+          },
+          builder: (context, params) => UpdateEventPageWidget(
+            modifEvent: params.getParam(
+              'modifEvent',
+              ParamType.Document,
+            ),
+          ),
         ),
         FFRoute(
           name: CreateAccountWidget.routeName,
@@ -274,6 +281,66 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: UpdateAccountWidget.routeName,
           path: UpdateAccountWidget.routePath,
           builder: (context, params) => UpdateAccountWidget(),
+        ),
+        FFRoute(
+          name: ChatHistoryWidget.routeName,
+          path: ChatHistoryWidget.routePath,
+          builder: (context, params) => ChatHistoryWidget(),
+        ),
+        FFRoute(
+          name: CreateArtisteWidget.routeName,
+          path: CreateArtisteWidget.routePath,
+          builder: (context, params) => CreateArtisteWidget(),
+        ),
+        FFRoute(
+          name: ReadArtisteWidget.routeName,
+          path: ReadArtisteWidget.routePath,
+          builder: (context, params) => ReadArtisteWidget(),
+        ),
+        FFRoute(
+          name: UpdateArtisteWidget.routeName,
+          path: UpdateArtisteWidget.routePath,
+          builder: (context, params) => UpdateArtisteWidget(),
+        ),
+        FFRoute(
+          name: GeminiChatWidget.routeName,
+          path: GeminiChatWidget.routePath,
+          builder: (context, params) => GeminiChatWidget(),
+        ),
+        FFRoute(
+          name: IndividualChatPageWidget.routeName,
+          path: IndividualChatPageWidget.routePath,
+          builder: (context, params) => IndividualChatPageWidget(
+            chatID: params.getParam(
+              'chatID',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ImdbWidget.routeName,
+          path: ImdbWidget.routePath,
+          builder: (context, params) => ImdbWidget(),
+        ),
+        FFRoute(
+          name: NotificationWidget.routeName,
+          path: NotificationWidget.routePath,
+          builder: (context, params) => NotificationWidget(),
+        ),
+        FFRoute(
+          name: NewsWidget.routeName,
+          path: NewsWidget.routePath,
+          builder: (context, params) => NewsWidget(),
+        ),
+        FFRoute(
+          name: ForumWidget.routeName,
+          path: ForumWidget.routePath,
+          builder: (context, params) => ForumWidget(),
+        ),
+        FFRoute(
+          name: PostsWidget.routeName,
+          path: PostsWidget.routePath,
+          builder: (context, params) => PostsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -444,7 +511,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/createAccount';
+            return '/homePage1';
           }
           return null;
         },

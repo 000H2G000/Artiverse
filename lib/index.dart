@@ -36,7 +36,7 @@ export '/artwork_details/uplad_post/uplad_post_widget.dart'
 export '/purchase/cart_copy/cart_copy_widget.dart' show CartCopyWidget;
 export '/artwork_details/art_work_details/art_work_details_widget.dart'
     show ArtWorkDetailsWidget;
-export '/forum_page/forum_page_widget.dart' show ForumPageWidget;
+export '/forum/topics/topics_widget.dart' show TopicsWidget;
 export '/discussion/discussion_widget.dart' show DiscussionWidget;
 export '/replies/replies_widget.dart' show RepliesWidget;
 export '/purchase/failed_payment/failed_payment_widget.dart'
@@ -45,10 +45,29 @@ export '/gestionartistprofile/read_account/read_account_widget.dart'
     show ReadAccountWidget;
 export '/event_page/users_events/users_events_widget.dart'
     show UsersEventsWidget;
-export '/facts_page/facts_page_widget.dart' show FactsPageWidget;
+export '/artwork_details/facts_page/facts_page_widget.dart'
+    show FactsPageWidget;
 export '/event_page/update_event_page/update_event_page_widget.dart'
     show UpdateEventPageWidget;
 export '/gestionartistprofile/create_account/create_account_widget.dart'
     show CreateAccountWidget;
 export '/gestionartistprofile/update_account/update_account_widget.dart'
     show UpdateAccountWidget;
+export '/chat_groupwbubbles/chat_history/chat_history_widget.dart'
+    show ChatHistoryWidget;
+export '/gestionartistprofile/create_artiste/create_artiste_widget.dart'
+    show CreateArtisteWidget;
+export '/gestionartistprofile/read_artiste/read_artiste_widget.dart'
+    show ReadArtisteWidget;
+export '/gestionartistprofile/update_artiste/update_artiste_widget.dart'
+    show UpdateArtisteWidget;
+export '/gestionartistprofile/gemini_chat/gemini_chat_widget.dart'
+    show GeminiChatWidget;
+export '/chat_groupwbubbles/individual_chat_page/individual_chat_page_widget.dart'
+    show IndividualChatPageWidget;
+export '/purchase/imdb/imdb_widget.dart' show ImdbWidget;
+export '/gestionartistprofile/notification/notification_widget.dart'
+    show NotificationWidget;
+export '/purchase/news/news_widget.dart' show NewsWidget;
+export '/purchase/forum/forum_widget.dart' show ForumWidget;
+export '/forum/posts/posts_widget.dart' show PostsWidget;
