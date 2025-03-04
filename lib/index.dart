@@ -37,8 +37,8 @@ export '/purchase/cart_copy/cart_copy_widget.dart' show CartCopyWidget;
 export '/artwork_details/art_work_details/art_work_details_widget.dart'
     show ArtWorkDetailsWidget;
 export '/forum/topics/topics_widget.dart' show TopicsWidget;
-export '/discussion/discussion_widget.dart' show DiscussionWidget;
-export '/replies/replies_widget.dart' show RepliesWidget;
+export '/chat2/discussion/discussion_widget.dart' show DiscussionWidget;
+export '/chat2/replies/replies_widget.dart' show RepliesWidget;
 export '/purchase/failed_payment/failed_payment_widget.dart'
     show FailedPaymentWidget;
 export '/gestionartistprofile/read_account/read_account_widget.dart'
